@@ -264,10 +264,12 @@ class Pseudonymize:
                 pseudonym = "[location]"
             # replace ORG
             elif ent_string == "ORG":
+                if "elements" in ent_word.lower():
+                    continue
                 pseudonym = "[organization]"
             # replace MISC
             elif ent_string == "MISC":
-                pseudonym = "[misc]"
+                continue  # do not replace MISC
 
             # add the pseudonym to the entity dict
             entity["pseudonym"] = pseudonym

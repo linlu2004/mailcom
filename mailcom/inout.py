@@ -55,7 +55,7 @@ class InoutHandler:
             str: The (potentially) cleaned up string."""
         soup = BeautifulSoup(text_check, "html.parser")
         if soup.find():
-            text_check = soup.get_text()
+            text_check = soup.get_text(separator=" ")
         return text_check
 
     def extract_email_info(self, file: Path) -> dict:
