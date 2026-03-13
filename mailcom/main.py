@@ -211,7 +211,7 @@ def get_workflow_settings(
     return workflow_settings
 
 
-def process_data(email_list: Iterator[list[dict]], workflow_settings: dict):
+def process_data(email_list: Iterator[dict], workflow_settings: dict):
     """Process the input data in this order:
     + detect language (optional)
     + detect date time (optional)
@@ -220,7 +220,7 @@ def process_data(email_list: Iterator[list[dict]], workflow_settings: dict):
     + pseudonymize numbers (optional)
 
     Args:
-        email_list (Iterator[list[dict]]): The list of dictionaries of input data.
+        email_list (Iterator[dict]): The list of dictionaries of input data.
         "content" field in each dictionary contains the main content.
         workflow_settings (dict): The workflow settings.
     """
