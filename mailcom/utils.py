@@ -47,22 +47,16 @@ def clean_up_content(content: str) -> tuple[str, list]:
 class SpacyLoader:
     def __init__(self):
         self.spacy_default_model = {
-            "es": "es_core_news_md",
-            "fr": "fr_core_news_md",
-            "de": "de_core_news_md",
-            "pt": "pt_core_news_md",
+            "it": "it_core_news_md",
             "en": "en_core_web_md",
         }
 
         self.spacy_instances = {}
 
     def get_default_model(self, language: str):
-        # special case for Galician
-        if language == "gl":
-            return "pt", self.spacy_default_model["pt"]
-        # use German as the default language
+        # use English as the default language
         if language not in self.spacy_default_model:
-            return "de", self.spacy_default_model["de"]
+            return "en", self.spacy_default_model["en"]
         return language, self.spacy_default_model[language]
 
     def init_spacy(self, language: str, model="default"):
