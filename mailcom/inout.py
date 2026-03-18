@@ -78,9 +78,11 @@ class InoutHandler:
         # find the types of attachments
         if attachments > 0:
             attachmenttypes = [
-                parsed_eml["attachment"][i]["extension"] for i in range(attachments)
+                parsed_eml["attachment"][i]["extension"]
+                for i in range(attachments)
+                if "extension" in parsed_eml["attachment"][i]
             ]
-
+            
         body_content = parsed_eml["body"][0]["content"]
         if not body_content and len(parsed_eml["body"]) > 1:
             # if the first body content is empty, use the second one
