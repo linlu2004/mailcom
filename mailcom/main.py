@@ -211,7 +211,7 @@ def get_workflow_settings(
     return workflow_settings
 
 
-def process_data(email_list: Iterator[dict], workflow_settings: dict):
+def process_data(email_list: Iterator[dict], workflow_settings: dict, spacy_loader=None, trans_loader=None):
     """Process the input data in this order:
     + detect language (optional)
     + detect date time (optional)
@@ -223,6 +223,8 @@ def process_data(email_list: Iterator[dict], workflow_settings: dict):
         email_list (Iterator[dict]): The list of dictionaries of input data.
         "content" field in each dictionary contains the main content.
         workflow_settings (dict): The workflow settings.
+        spacy_loader (optional): Pre-initialized SpacyLoader instance to reuse across calls.
+        trans_loader (optional): Pre-initialized TransformerLoader instance to reuse across calls.
     """
     # get workflow settings
     unmatched_keyword = workflow_settings.get("unmatched_keyword", "unmatched")
@@ -239,9 +241,9 @@ def process_data(email_list: Iterator[dict], workflow_settings: dict):
     ner_pipeline = workflow_settings.get("ner_pipeline", None)
     pseudo_fields = workflow_settings.get("pseudo_fields", [])
 
-    # init necessary objects
-    spacy_loader = utils.SpacyLoader()
-    trans_loader = utils.TransformerLoader()
+    # init necessary objects (reuse if provided, otherwise create new ones)
+    spacy_loader = spacy_loader or utils.SpacyLoader()
+    trans_loader = trans_loader or utils.TransformerLoader()
     pseudonymizer = Pseudonymize(pseudo_first_names, trans_loader, spacy_loader)
     if detect_lang:
         lang_detector = LangDetector(trans_loader)
